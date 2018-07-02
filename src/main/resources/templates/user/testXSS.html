@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div id = "sss">1</div>
+    <div id = "app"></div>
+    <script type="text/javascript" src="/webjars/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var sss = $('#sss').html();
+            alert(sss);
+//            var shom = {};
+//            shom["id"] = sss;
+            $.ajax({
+                type: 'GET',
+                contentType: "application/json",
+                url: "http://localhost:8080/user/getUser?id=" + sss,
+//                data: JSON.stringify(shom),
+//                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function(data){
+                    $('#app').html(data);
+                },
+                error: function(e){
+                    alert("错误");
+                }
+            })
+        });
+    </script>
+</body>
+</html>

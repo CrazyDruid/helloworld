@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Test.Dao.VideosMapper">
+  <resultMap id="BaseResultMap" type="Test.Entity.Videos">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="counts" jdbcType="VARCHAR" property="counts" />
+    <result column="create_date" jdbcType="VARCHAR" property="createDate" />
+    <result column="update_date" jdbcType="VARCHAR" property="updateDate" />
+    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="Test.Entity.Videos">
+    <result column="synopsis" jdbcType="LONGVARCHAR" property="synopsis" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, url, author, counts,create_date,update_date,del_flag
+  </sql>
+  <sql id="Blob_Column_List">
+    synopsis
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from videos
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from videos
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="Test.Entity.Videos">
+    insert into videos (id, name, url, 
+      author,counts,
+      synopsis,create_date,update_date,del_flag)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{counts,jdbcType=VARCHAR},
+      #{synopsis,jdbcType=LONGVARCHAR},#{createDate,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=VARCHAR},#{delFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="Test.Entity.Videos">
+    insert into videos
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="counts != null">
+        counts,
+      </if>
+      <if test="synopsis != null">
+        synopsis,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="delFlag != null">
+        del_flag
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="counts != null">
+        #{counts,jdbcType=VARCHAR},
+      </if>
+      <if test="synopsis != null">
+        #{synopsis,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Test.Entity.Videos">
+    update videos
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="counts != null">
+        counts = #{counts,jdbcType=VARCHAR},
+      </if>
+      <if test="synopsis != null">
+        synopsis = #{synopsis,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="Test.Entity.Videos">
+    update videos
+    set name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      counts = #{counts,jdbcType=VARCHAR},
+      synopsis = #{synopsis,jdbcType=LONGVARCHAR},
+      create_date =  #{createDate,jdbcType=VARCHAR},
+      update_date =  #{updateDate,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Test.Entity.Videos">
+    update videos
+    set name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      counts = #{counts,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findByName" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from videos
+    where name = #{name,jdbcType=VARCHAR}
+    limit 1
+  </select>
+</mapper>

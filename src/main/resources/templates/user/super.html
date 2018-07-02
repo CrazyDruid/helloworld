@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>super test</title>
+    </head>
+    <body>
+        <div id = "all">
+            哈哈<input id="text" type="text">
+            <hr/>
+            <button onclick="send()">发送消息</button>
+            <hr/>
+            <button onclick="stopSocket()">关闭连接</button>
+            <button onclick="openSocket()">打开连接</button>
+            <div id = "message"></div>
+        </div>
+    </body>
+
+    <script type="text/javascript">
+        var websocket = null;
+        openSocket();
+        function setToHtml(cheng){
+            document.getElementById("message").innerHTML += cheng + '<br/>';
+        }
+
+        function stopSocket(){
+            websocket.close();
+        }
+
+        function openSocket(){
+            if ('WebSocket' in window) {
+                websocket = new WebSocket("ws://localhost:8080/superTest?id=3&name=le");
+            }
+            websocket.onerror = function(){
+                setToHtml("连接失败");
+            }
+
+            websocket.onopen = function(){
+                setToHtml("连接成功");
+            }
+
+            websocket.onclose = function(){
+                setToHtml("关闭连接");
+            }
+
+            websocket.onmessage = function(cheng){
+                setToHtml(cheng.data);
+            }
+
+            websocket.onbeforeunload = function(){
+                close();
+            }
+        }
+
+        function send(cheng){
+            var message = document.getElementById('text').value;
+            websocket.send(message);
+        }
+
+    </script>
+</html>
