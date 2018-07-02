@@ -46,4 +46,8 @@ public class TestAop {
 //    public void excudeController() {
 //        System.out.println("=============");
 //    }
+    public String testA(){
+        System.out.println("github test");
+        return null;
+    }
 }

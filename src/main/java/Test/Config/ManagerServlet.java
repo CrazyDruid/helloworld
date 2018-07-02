@@ -10,5 +10,4 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint(value = "/managerSocket")
 public class ManagerServlet extends HttpServlet {
 
-
 }
